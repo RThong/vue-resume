@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       markdownFlag: false,
-      interval: 50,
+      interval: 80,
       temporaryStyleText: '',
       currentStyle: '',
       fullStyle: [`/*
