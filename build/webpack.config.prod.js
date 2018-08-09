@@ -13,7 +13,7 @@ const config = {
 	output: {
 		filename: 'bundle.[chunkhash:8].js',
 		path: path.join(__dirname, '../dist'),
-    publicPath: 'dist'
+    // publicPath: 'dist'
 	},
 	module: {
 		rules: [
