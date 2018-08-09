@@ -15,7 +15,7 @@
         return Prism.highlight(this.code, Prism.languages.css);
       },
       currentStyle(){
-        return `<style>${this.styleText}</style>`;
+        return  `<style>${this.styleText}</style>`;
       }
     },
     methods:{

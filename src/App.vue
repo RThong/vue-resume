@@ -6,19 +6,19 @@
 </template>
 
 <script>
-import StyleEditor from './components/StyleEditor'
-import ResumeEditor from './components/ResumeEditor'
-import './assets/style.css'
+import StyleEditor from './components/StyleEditor.vue'
+import ResumeEditor from './components/ResumeEditor.vue'
 export default {
   name: 'app',
   data () {
     return {
       markdownFlag: false,
-      interval: 80,
+      interval: 40,
+      //每遇到一个分号就去改变样式(向style标签添加内容)
       temporaryStyleText: '',
       currentStyle: '',
       fullStyle: [`/*
-      * 大家好，我是HRT
+      * 大家好，我是洪儒焘
       * 这是我用Vue.js做的一款炫酷的简历。
       * 一起来看看吧！
       */
@@ -111,34 +111,29 @@ export default {
       }
       `],
       currentResume: '',
-      fullResume: `方应杭
+      fullResume: `洪儒焘
 ----
 
-资深前端工程师，资深前端讲师，现在在 [饥人谷](http://jirengu.com) 教前端课程。
+前端工程师
 
 技能
 ----
 
 * 前端开发
-* Rails 开发
 * Node.js 开发
-* 前端授课
 
 工作经历
 ----
 
-1. [饥人谷](http://jirengu.com)
-2. 腾讯即时通讯平台部
-3. 阿里巴巴B2B部门
-4. 彩程知人项目组
+1. 海航易生金服
+
 
 链接
 ----
 
-* [GitHub](https://github.com/frankfang)
-* [我的文章](https://www.zhihu.com/people/zhihusucks/pins/posts)
+* [GitHub](https://github.com/RThong)
 
-> 如果你喜欢这个效果，Fork [我的项目](https://github.com/jirengu-inc/animating-resume)，打造你自己的简历！
+> 如果你喜欢这个效果，Fork [我的项目](https://github.com/RThong/vue-resume)，打造你自己的简历！
 
 `,
       n: 0
@@ -167,42 +162,41 @@ export default {
         let allStyle = '', length = 0;
         for(let index in this.fullStyle){
           allStyle = allStyle + this.fullStyle[index];
-          length = length + this.fullStyle[index].length;
           if(i == index){     
             break;
-          }      
+          }
         }
         let styleTimer = setInterval(()=>{
           this.currentStyle = allStyle.substring(0,this.n);
-        //写到最后一行往下拉
-        if(this.currentStyle[this.n-2] == '\n'){
-          this.$nextTick(() => {
-            this.$refs.styleEditor.goBottom()
-          })
-        }
-        //每个分号结束后进行样式的更改
-        if(this.currentStyle[this.n-1] == ';'){
-          this.temporaryStyleText = this.currentStyle;
-        }
-        if(this.n == this.fullStyle[0].length){
-          clearInterval(styleTimer)
-          resolve();
-        }
-        else if(this.n == this.fullStyle[0].length + this.fullStyle[1].length){
-          clearInterval(styleTimer);
-          this.n++;
-          this.markdownFlag = true;
-          resolve()
-        }
-        else if(this.n == this.fullStyle[0].length + this.fullStyle[1].length + this.fullStyle[2].length){
-          clearInterval(styleTimer)
-          resolve()
-        }
-        else{
-          this.n++;
-        }
-        })
-      },this.interval)
+          //写到最后一行往下拉
+          if(this.currentStyle[this.n-2] == '\n'){
+            this.$nextTick(() => {
+              this.$refs.styleEditor.goBottom()
+            })
+          }
+          //每个分号结束后进行样式的更改
+          if(this.currentStyle[this.n-1] == ';'){
+            this.temporaryStyleText = this.currentStyle;
+          }
+          if(this.n == this.fullStyle[0].length){
+            clearInterval(styleTimer)
+            resolve();
+          }
+          else if(this.n == this.fullStyle[0].length + this.fullStyle[1].length){
+            clearInterval(styleTimer);
+            this.n++;
+            this.markdownFlag = true;
+            resolve()
+          }
+          else if(this.n == this.fullStyle[0].length + this.fullStyle[1].length + this.fullStyle[2].length){
+            clearInterval(styleTimer)
+            resolve()
+          }
+          else{
+            this.n++;
+          }
+        },this.interval)
+      })
     },
     resumeShow(){
       return new Promise((resolve, reject)=>{
@@ -232,6 +226,11 @@ export default {
 </script>
 
 <style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
